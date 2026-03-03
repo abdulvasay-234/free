@@ -1,0 +1,121 @@
+<!--
+HackUnion Smart Image Classifier (Beginner Setup Guide)
+========================================================
+How to get your Teachable Machine model URL:
+1) Go to https://teachablemachine.withgoogle.com/ and open your Image Project.
+2) Click "Export Model".
+3) Choose "Tensorflow.js".
+4) You can use either:
+  - "Upload (cloud hosted)" model URL
+    Example: https://teachablemachine.withgoogle.com/models/abc123/
+  - or "Download my model" and place the folder as ./my_model/
+
+How to set your model path in this project:
+1) Open script.js
+2) Find: const MODEL_URL = "./my_model/";
+3) Keep as-is if you downloaded model files into ./my_model/
+4) Or replace with your hosted URL.
+5) Keep the trailing slash (/) if possible.
+
+How to run locally (no backend needed):
+- Export from Teachable Machine as TensorFlow.js.
+- Copy files into:
+  - Demo/my_model/model.json
+  - Demo/my_model/metadata.json
+  - all .bin weight files from export
+- Use VS Code "Live Server" extension and click "Go Live" (localhost).
+- Do not open with file:// directly.
+- Click Start Camera, then allow camera permission in browser.
+
+Optional deployment with GitHub Pages:
+1) Create a new GitHub repository and upload these files.
+2) Go to Settings -> Pages.
+3) Source: Deploy from a branch, Branch: main, Folder: / (root).
+4) Save and open your Pages URL.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HackUnion Smart Image Classifier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <p class="chip">Student Tech Meetup Demo</p>
+        <h1>HackUnion Smart Image Classifier</h1>
+        <p class="subtitle">
+          A beginner-friendly Machine Learning demo built with Teachable Machine + TensorFlow.js,
+          running fully in your browser with no backend.
+        </p>
+      </header>
+
+      <section class="controls card" aria-label="Camera controls">
+        <button id="startButton" class="btn-primary">Start Camera</button>
+        <button id="stopButton" class="btn-secondary" disabled>Stop Camera</button>
+        <label for="imageUpload" class="upload-label">or Upload Image</label>
+        <input id="imageUpload" class="upload-input" type="file" accept="image/*" />
+        <p id="statusText" class="status">Status: Waiting to start...</p>
+      </section>
+
+      <section class="demo-grid">
+        <article class="card webcam-card">
+          <h2>Webcam Preview</h2>
+          <div id="webcam-container" class="webcam-container">
+            <p class="placeholder">Your camera feed will appear here.</p>
+          </div>
+        </article>
+
+        <article class="card results-card">
+          <h2>Prediction Results</h2>
+          <div id="prediction-container" class="prediction-container">
+            <p class="placeholder">Predictions will appear after camera starts.</p>
+          </div>
+        </article>
+
+        <article class="card upload-card">
+          <h2>Optional Fallback: Image Upload</h2>
+          <div class="upload-preview-wrap">
+            <img
+              id="uploadedImage"
+              class="uploaded-image hidden"
+              alt="Selected image for prediction"
+            />
+            <p id="uploadPlaceholder" class="placeholder">
+              If webcam access is blocked, upload an image to classify.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card readme-section" aria-label="Project README">
+        <h2>README for Students</h2>
+        <p>
+          This project shows how to run image classification in the browser using a model trained in
+          Teachable Machine. You can change the model, redesign the UI, or add custom actions when
+          a specific class is detected.
+        </p>
+        <ul>
+          <li>Try retraining your own model (for hand signs, objects, or expressions).</li>
+          <li>Replace the model URL in <strong>script.js</strong> and test instantly.</li>
+          <li>Customize styles in <strong>styles.css</strong> to match your meetup branding.</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Required ML libraries from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
